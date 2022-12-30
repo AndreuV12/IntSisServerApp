@@ -15,8 +15,7 @@ machine_router.get('/add/', async (req,res) => {
 })
 
 machine_router.get('/delete/:name', async (req,res) => {
-    res.json ( await deleteMachine(req.query.name) )
-    
+    res.json ( await deleteMachine(req.query.name) )  
 })
 
 export default machine_router
