@@ -13,6 +13,8 @@ import reservation_router from './routes/reservation.js'
 import { checkAuth, addCredentials} from './utils/middlewares.js'
 import { PORT } from './config/config.js'
 
+console.log(process.env.URL)
+
 let app = express()
 app.use(cors())
 app.use(express.json())

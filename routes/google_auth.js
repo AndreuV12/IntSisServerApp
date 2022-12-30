@@ -7,6 +7,8 @@ import { userFindOrCreate } from '../controllers/user.js'
 
 import { GOOGLE_CLIENT, GOOGLE_SECRET } from '../config/config.js'
 
+import  {URL} from '../config/config.js'
+
 const GOOGLE_SCOPE = [ 'email', 'profile' ]
 const callbackUrl = "http://localhost:3030/oauth/google/callback"
 
@@ -43,7 +45,7 @@ google_router.get('/callback', async(req, res) => {
 
     req.session.user = await userFindOrCreate(email, username, null, 0)  //init user without permission           
     
-    res.redirect(`http://localhost:3030/`)    
+    res.redirect(URL)    
 
 })
 
