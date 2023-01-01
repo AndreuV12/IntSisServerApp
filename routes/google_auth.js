@@ -10,7 +10,7 @@ import { GOOGLE_CLIENT, GOOGLE_SECRET } from '../config/config.js'
 import  { SERVER_URL, CLIENT_URL } from '../config/config.js'
 
 const GOOGLE_SCOPE = [ 'email', 'profile' ]
-const callbackUrl = `${SERVER_URL}/google/callback`
+const callbackUrl = `${SERVER_URL}/oauth/google/callback`
 
 //express
 let google_router = Router()
