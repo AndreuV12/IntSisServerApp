@@ -11,7 +11,7 @@ import machine_router from './routes/machine.js'
 import reservation_router from './routes/reservation.js'
 
 import { checkAuth, addCredentials} from './utils/middlewares.js'
-import { PORT } from './config/config.js'
+import { PORT, URL } from './config/config.js'
 
 console.log(process.env.URL)
 
@@ -38,8 +38,8 @@ app.use('/reservations/', reservation_router)
 
 app.use(addCredentials)
 
-app.get('/', checkAuth, (req,res) => {
-    res.send(`Hi ${req.session.user.email}!!`)
+app.get('/', (req,res) => {
+    res.send(`Hi ${req.session.user.email}, URL ${URL}!!`)
 })
 
 app.get('/login',  (req, res) => {
