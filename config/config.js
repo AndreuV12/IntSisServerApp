@@ -1,15 +1,16 @@
 import dotenv from 'dotenv'
-dotenv.config({ path: 'config/.env', debug: true })
 
-let DB_USER = process.env.DB_USER
-let DB_PASSWORD = process.env.DB_PASSWORD
-let GOOGLE_CLIENT = process.env.GOOGLE_CLIENT
-let GOOGLE_SECRET = process.env.GOOGLE_SECRET
-let PORT = process.env.PORT
+if ( !process.env.ON_PRODUCTION ) dotenv.config({ path: 'config/.env' })
+let {
+    ON_PRODUCTION,
+    PORT,
+    SERVER_URL,
+    CLIENT_URL,
+    DB_USER, 
+    DB_PASSWORD, 
+    GOOGLE_CLIENT, 
+    GOOGLE_SECRET,
+    COOKIE_DOMAIN
+} = process.env
 
-let URL = process.env.ON_PRODUCTION ? process.env.URL : "http://localhost:3030/"
-let CLIENT_URL = process.env.ON_PRODUCTION ? process.env.CLIENT_URL : "http://localhost:3030/"
-
-let COOKIE_DOMAIN = process.env.ON_PRODUCTION ? "herokuapp.com" : "localhost"
-
-export  {DB_USER, DB_PASSWORD, GOOGLE_CLIENT, GOOGLE_SECRET, PORT, URL, CLIENT_URL, COOKIE_DOMAIN}
+export  {  ON_PRODUCTION ,PORT, SERVER_URL, CLIENT_URL, DB_USER, DB_PASSWORD, GOOGLE_CLIENT, GOOGLE_SECRET, COOKIE_DOMAIN }

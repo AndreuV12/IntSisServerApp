@@ -11,7 +11,7 @@ import machine_router from './routes/machine.js'
 import reservation_router from './routes/reservation.js'
 
 import { checkAuth, addCredentials} from './utils/middlewares.js'
-import { PORT, URL, COOKIE_DOMAIN } from './config/config.js'
+import { PORT, ON_PRODUCTION, COOKIE_DOMAIN} from './config/config.js'
 
 let app = express()
 app.use(cors())
@@ -23,7 +23,8 @@ app.use(session({
     name: "session-cookie",
     cookie: {
         maxAge: 60*60*1000,
-        secure: process.env.ON_PRODUCTION ? true : false
+        secure: Boolean(ON_PRODUCTION),
+        domain: COOKIE_DOMAIN
     },
     resave: false,
     saveUninitialized: false
@@ -34,15 +35,10 @@ app.use('/oauth/google/', google_router)
 app.use('/terminals/', terminal_router)
 app.use('/machines/', machine_router)
 app.use('/reservations/', reservation_router)
-
 app.use(addCredentials)
 
-app.get('/', (req,res) => {
+app.get('/', checkAuth, (req,res) => {
     res.send(`Hi ${req.session.user}, ${COOKIE_DOMAIN}!`)
-})
-
-app.get('/check/',checkAuth, (req,res) => {
-    res.send(`Hi ${req.session.user}, URL ${URL}!!`)
 })
 
 app.get('/login',  (req, res) => {
@@ -54,7 +50,4 @@ app.get('/login',  (req, res) => {
     res.json(req.session.user)
 })
 
-app.get('/env',  (req, res) => {
-console.log(process.env)
-})
-app.listen(PORT,() => console.log(`Server App listening on ${PORT}`))
+app.listen( PORT,() => console.log(`Server App listening on ${PORT}`))
