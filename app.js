@@ -23,13 +23,14 @@ app.use(session({
     name: "session-cookie",
     cookie: {
         maxAge: 60*60*1000,
-        secure: Boolean(ON_PRODUCTION)
-        // domain: COOKIE_DOMAIN
+        secure: Boolean(ON_PRODUCTION),
+        domain: COOKIE_DOMAIN
     },
     resave: false,
     saveUninitialized: false
 }))
 
+console.log(COOKIE_DOMAIN)
 
 app.use('/oauth/google/', google_router)
 app.use('/terminals/', terminal_router)
