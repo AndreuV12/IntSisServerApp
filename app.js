@@ -17,17 +17,18 @@ let app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.set('trust proxy', 1)
 app.use(session({
     secret: "pwd",
     name: "session-cookie",
     cookie: {
         maxAge: 60*60*1000,
-        httpOnly: false,
-        domain: COOKIE_DOMAIN
+        secure: process.env.ON_PRODUCTION ? true : false
     },
     resave: false,
     saveUninitialized: false
 }))
+
 
 app.use('/oauth/google/', google_router)
 app.use('/terminals/', terminal_router)
