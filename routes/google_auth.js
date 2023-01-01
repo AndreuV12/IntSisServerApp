@@ -43,7 +43,8 @@ google_router.get('/callback', async(req, res) => {
     let username = response.data.given_name
     let email = response.data.email
 
-    req.session.user = await userFindOrCreate(email, username, null, 0)  //init user without permission           
+    req.session.user = await userFindOrCreate(email, username, null, 0)  //init user without permission      
+    console.log(CLIENT_URL)     
     res.redirect(CLIENT_URL)    
 })
 
