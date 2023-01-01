@@ -37,7 +37,7 @@ app.use('/reservations/', reservation_router)
 app.use(addCredentials)
 
 app.get('/', (req,res) => {
-    res.send(`Hi ${req.session.user}, URL ${URL}!!`)
+    res.send(`Hi ${req.session.user}, ${COOKIE_DOMAIN}!`)
 })
 
 app.get('/check/',checkAuth, (req,res) => {

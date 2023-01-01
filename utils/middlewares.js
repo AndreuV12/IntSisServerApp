@@ -10,7 +10,7 @@ let addCredentials = (req, res, next) => {
     next()
 }
 
-let addSession = (req, res, next) => {
+let addSession = (req, _res, next) => {
     req.session.user = {
         email: "andreu.villaro@estudiantat.upc.edu",
         username: "Andreu",
