@@ -13,8 +13,6 @@ import reservation_router from './routes/reservation.js'
 import { checkAuth, addCredentials} from './utils/middlewares.js'
 import { PORT, URL } from './config/config.js'
 
-console.log(process.env.URL)
-
 let app = express()
 app.use(cors())
 app.use(express.json())
@@ -39,7 +37,7 @@ app.use('/reservations/', reservation_router)
 app.use(addCredentials)
 
 app.get('/', (req,res) => {
-    res.send(`Hi ${req.session.user.email}, URL ${URL}!!`)
+    res.send(`Hi ${req.session.user}, URL ${URL}!!`)
 })
 
 app.get('/login',  (req, res) => {
