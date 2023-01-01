@@ -48,4 +48,8 @@ app.get('/login',  (req, res) => {
     }
     res.json(req.session.user)
 })
+
+app.get('/env',  (req, res) => {
+console.log(process.env)
+})
 app.listen(PORT,() => console.log(`Server App listening on ${PORT}`))

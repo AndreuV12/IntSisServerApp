@@ -5,7 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "deploy": "git add .;git commit -m 'canvis'; git push -u origin main"
   },
   "author": "",
   "license": "ISC",
