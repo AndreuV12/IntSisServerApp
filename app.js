@@ -23,8 +23,7 @@ app.use(session({
     name: "session-cookie",
     cookie: {
         maxAge: 60*60*1000,
-        secure: Boolean(ON_PRODUCTION),
-        domain: COOKIE_DOMAIN
+        secure: Boolean(ON_PRODUCTION)
     },
     resave: false,
     saveUninitialized: false
