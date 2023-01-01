@@ -17,14 +17,14 @@ let app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.set('trust proxy', 1)
+app.set('trust proxy', 2)
 app.use(session({
     secret: "pwd",
     name: "session-cookie",
     cookie: {
         maxAge: 60*60*1000,
-        secure: Boolean(ON_PRODUCTION),
-        domain: COOKIE_DOMAIN
+        secure: Boolean(ON_PRODUCTION)
+        // domain: COOKIE_DOMAIN
     },
     resave: false,
     saveUninitialized: false
