@@ -25,14 +25,14 @@ app.set('trust proxy', 1)
 app.use(session({
     secret: "pwd",
     name: "session-cookie",
+    resave: false,
+    saveUninitialized: false,
     cookie: {
         maxAge: 60*60*1000,
         secure: Boolean(ON_PRODUCTION),
-        httpOnly: !Boolean(ON_PRODUCTION),
-        domain: ".herokuapp.com"
-    },
-    resave: false,
-    saveUninitialized: false
+        // httpOnly: !Boolean(ON_PRODUCTION),
+        sameSite: "none"
+    }
 }))
 
 app.use(addCredentials)
