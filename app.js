@@ -21,7 +21,7 @@ app.use(cors({
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.set('trust proxy', 2)
+app.set('trust proxy', 1)
 app.use(session({
     secret: "pwd",
     name: "session-cookie",
@@ -35,11 +35,12 @@ app.use(session({
     saveUninitialized: false
 }))
 
+app.use(addCredentials)
 app.use('/oauth/google/', google_router)
 app.use('/terminals/', terminal_router)
 app.use('/machines/', machine_router)
 app.use('/reservations/', reservation_router)
-app.use(addCredentials)
+
 
 app.get('/', checkAuth, (req,res) => {
     res.send(`Hi ${req.session.user}, ${COOKIE_DOMAIN}!`)
@@ -52,6 +53,11 @@ app.get('/login',  (req, res) => {
         permission: 3
     }
     res.json(req.session.user)
+})
+
+app.get('/username', checkAuth, (req, res) => {
+
+    res.json(req.session.user.username)
 })
 
 app.listen( PORT,() => console.log(`Server App listening on ${PORT}`))
