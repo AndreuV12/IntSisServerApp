@@ -30,7 +30,6 @@ app.use(session({
     cookie: {
         maxAge: 60*60*1000,
         secure: Boolean(ON_PRODUCTION),
-        // httpOnly: !Boolean(ON_PRODUCTION),
         sameSite: "none"
     }
 }))
@@ -46,17 +45,16 @@ app.get('/', checkAuth, (req,res) => {
     res.send(`Hi ${req.session.user}, ${COOKIE_DOMAIN}!`)
 })
 
-app.get('/login',  (req, res) => {
-    req.session.user = {
-        email: "andreu.villaro@estudiantat.upc.edu",
-        username: "Andreu",
-        permission: 3
-    }
+app.get('/login', checkAuth, (req, res) => {
     res.json(req.session.user)
 })
 
-app.get('/username', checkAuth, (req, res) => {
+app.get('/logout', checkAuth, (req, res) => {
+    req.session.user = {}
+    res.send("loged out")
+})
 
+app.get('/username', checkAuth, (req, res) => {
     res.json(req.session.user.username)
 })
 

@@ -17,19 +17,19 @@ reservation_router.get('/find/:id', async ( req, res ) => {
     return res.json( await getReservationById(req.params.id) )
 })
 
-reservation_router.get('/user/', addSession, checkAuth, async ( req, res ) => {
+reservation_router.get('/user/', checkAuth, async ( req, res ) => {
     let {from, to, terminal_id} = req.query
     return res.json( await getReservations(from, to, terminal_id, req.session.user.email) )
 })
 
-reservation_router.get('/check/', addSession, checkAuth, async (req, res) => {
+reservation_router.get('/check/', checkAuth, async (req, res) => {
     let terminal = await getTerminal(req.query.terminal_id)
     if (!terminal) 
         return res.send("Non existing terminal_id")
     return res.json( await checkReservation(req.query.terminal_id, req.session.user.email) )
 })
 
-reservation_router.post('/add', addSession, checkAuth, async function(req, res) {
+reservation_router.post('/add', checkAuth, async function(req, res) {
     let {terminal_id, start, end} = req.body
     let {permission, email} = req.session.user
 
@@ -50,7 +50,7 @@ reservation_router.post('/add', addSession, checkAuth, async function(req, res) 
     return res.json(await addReservation(email, terminal_id, start, end))
 })
 
-reservation_router.post('/delete', addSession, checkAuth, async function(req, res) {
+reservation_router.post('/delete', checkAuth, async function(req, res) {
     let reservation = await getReservationById(req.body.reservation_id)
 
     if (!reservation) return res.send("No reservation matched")
