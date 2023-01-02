@@ -11,10 +11,13 @@ import machine_router from './routes/machine.js'
 import reservation_router from './routes/reservation.js'
 
 import { checkAuth, addCredentials} from './utils/middlewares.js'
-import { PORT, ON_PRODUCTION, COOKIE_DOMAIN} from './config/config.js'
+import { PORT, ON_PRODUCTION, COOKIE_DOMAIN, CLIENT_URL} from './config/config.js'
 
 let app = express()
-app.use(cors())
+app.use(cors({
+    origin: CLIENT_URL,
+    credentials: true
+}))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.set('trust proxy', 2)
@@ -25,7 +28,7 @@ app.use(session({
         maxAge: 60*60*1000,
         secure: Boolean(ON_PRODUCTION),
         httpOnly: !Boolean(ON_PRODUCTION),
-        // domain: "herokuapp.com"
+        domain: ".herokuapp.com"
     },
     resave: false,
     saveUninitialized: false
