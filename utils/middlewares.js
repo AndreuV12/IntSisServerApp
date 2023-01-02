@@ -1,6 +1,5 @@
 import { CLIENT_URL } from "../config/config.js"
 
-{ CLIENT_URL}
 let checkAuth = (req, res, next) => {
     if (!req.session.user) return res.status(401).send("Not auth")
     next()

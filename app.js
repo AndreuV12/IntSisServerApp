@@ -26,7 +26,6 @@ app.use(session({
         secure: Boolean(ON_PRODUCTION),
         httpOnly: !Boolean(ON_PRODUCTION),
         // domain: "herokuapp.com"
-
     },
     resave: false,
     saveUninitialized: false
