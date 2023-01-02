@@ -24,8 +24,8 @@ app.use(session({
     cookie: {
         maxAge: 60*60*1000,
         secure: Boolean(ON_PRODUCTION),
-        // httpOnly: !Boolean(ON_PRODUCTION),
-        domain: "herokuapp.com"
+        httpOnly: !Boolean(ON_PRODUCTION),
+        // domain: "herokuapp.com"
 
     },
     resave: false,
