@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import session from 'express-session'
-
+import cookieParser from 'cookie-parser'
 import "./config/mongo.js"
 import "./utils/mqtt/mqttHandler.js"
 
@@ -18,6 +18,7 @@ app.use(cors({
     origin: CLIENT_URL,
     credentials: true
 }))
+app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.set('trust proxy', 2)
@@ -33,8 +34,6 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
-
-console.log(COOKIE_DOMAIN)
 
 app.use('/oauth/google/', google_router)
 app.use('/terminals/', terminal_router)
