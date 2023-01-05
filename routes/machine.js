@@ -10,12 +10,12 @@ machine_router.get('/find/:name', async (req,res) => {
     res.json(await getMachine(req.params.name))
 })
 
-machine_router.get('/add/', async (req,res) => {
-    res.json(await addMachine(req.query.name, req.query.description))
+machine_router.post('/add', async (req,res) => {
+    res.json(await addMachine(req.body.name, req.body.description))
 })
 
-machine_router.get('/delete/:name', async (req,res) => {
-    res.json ( await deleteMachine(req.query.name) )  
+machine_router.post('/delete', async (req,res) => {
+    res.json ( await deleteMachine(req.body.name) )  
 })
 
 export default machine_router

@@ -30,7 +30,7 @@ app.use(session({
     cookie: {
         maxAge: 60*60*1000,
         secure: Boolean(ON_PRODUCTION),
-        sameSite: "none"
+        sameSite: Boolean(ON_PRODUCTION) ? "none" : false
     }
 }))
 

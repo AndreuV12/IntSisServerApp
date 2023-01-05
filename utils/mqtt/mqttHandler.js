@@ -18,15 +18,15 @@ client.on('message', async (topic, message) => {
         let user = await getUserByRfid(rfid)
         let res = await checkReservation(terminal_id, user.email)
         if (res){
-            client.publish('reserva', `${terminal_id}/${res.end}`)
+            client.publish(`${terminal_id}/reserva`, res.end)
             let now = new Date()
             setTimeout(()=>{
-                client.publish('reserva',`${terminal_id}/ended`)
+                client.publish(`${terminal_id}/reserva`,'-1')
             }, 
             res.end - now)
         }     
         else    
-            client.publish('reserva', `${terminal_id}/notReserved`)
+            client.publish(`${terminal_id}/reserva`,'-1')
     }
 })
 export default client
