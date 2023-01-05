@@ -13,4 +13,4 @@ client.on('message', function (topic, message) {
     console.log(topic, "->", message.toString())
 })
 
-client.publish('rfid', `${terminal_id}/121`)
+client.publish('rfid', `${terminal_id}/b27433ec`)

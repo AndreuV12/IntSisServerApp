@@ -16,17 +16,22 @@ client.on('message', async (topic, message) => {
         let [terminal_id, rfid] = message.toString().split('/')
         
         let user = await getUserByRfid(rfid)
-        let res = await checkReservation(terminal_id, user.email)
-        if (res){
-            client.publish(`${terminal_id}/reserva`, res.end)
-            let now = new Date()
-            setTimeout(()=>{
+        if (user){
+            let res = await checkReservation(terminal_id, user.email)
+            if (res){
+                client.publish(`${terminal_id}/reserva`, res.end.toISOString())
+                let now = new Date()
+                setTimeout(()=>{
+                    client.publish(`${terminal_id}/reserva`,'-1')
+                }, 
+                res.end - now)
+            }     
+            else    
                 client.publish(`${terminal_id}/reserva`,'-1')
-            }, 
-            res.end - now)
-        }     
-        else    
+        }
+        else{
             client.publish(`${terminal_id}/reserva`,'-1')
-    }
+        }
+    }  
 })
 export default client
