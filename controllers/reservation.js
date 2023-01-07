@@ -28,6 +28,11 @@ let getReservationById = async function (reservation_id){
     return await Reservation.findById(reservation_id).catch( () =>(null) )
 }
 
+let getReservationByCode = async function (code, email){
+    let now = new Date()
+    return await Reservation.findOne({code, email, start: {$lte: now}, end: {$gte: now}})
+}
+
 let getReservations = async function (from, to, terminal_id, email){
     let filters = {}
     if (from){
@@ -46,4 +51,4 @@ let getReservations = async function (from, to, terminal_id, email){
     return await Reservation.find(filters)
 }
 
-export {checkReservation, addReservation, deleteReservation, getReservationById, getReservations }
+export {checkReservation, addReservation, deleteReservation, getReservationById, getReservations, getReservationByCode }

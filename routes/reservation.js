@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import { getReservationById, getReservations, checkReservation, addReservation, deleteReservation} from '../controllers/reservation.js'
 import { getTerminal } from '../controllers/terminal.js'
-import { checkAuth, addSession } from '../utils/middlewares.js'
-
+import { checkAuth } from '../utils/middlewares.js'
+import { activateReservation } from '../utils/mqtt/mqttHandler.js'
 //express
 const reservation_router = Router()
 
@@ -27,6 +27,13 @@ reservation_router.get('/check/', checkAuth, async (req, res) => {
     if (!terminal) 
         return res.send("Non existing terminal_id")
     return res.json( await checkReservation(req.query.terminal_id, req.session.user.email) )
+})
+
+reservation_router.get('/code', checkAuth, async (req, res) => {
+    let reservation = await checkReservation(req.query.code, req.session.user.email) 
+    if (reservation)
+        activateReservation(reservation.terminal_id, reservation.end)
+    return reservation
 })
 
 reservation_router.post('/add', checkAuth, async function(req, res) {

@@ -25,7 +25,7 @@ user_router.get('/login', (req, res) => {
 })
 
 user_router.get('/logout', checkAuth, (req, res) => {
-    delete req.session.user
+    delete req.session
     res.send("loged out")
 })
 
