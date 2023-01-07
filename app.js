@@ -18,7 +18,7 @@ let app = express()
 var whitelist = ['http://localhost:3000/', 'https://techlab-client.herokuapp.com/']
 
 app.use(cors({
-    origin: CLIENT_URL,
+    // origin: CLIENT_URL,
     credentials: true,
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
