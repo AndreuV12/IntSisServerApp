@@ -35,4 +35,5 @@ client.on('message', async (topic, message) => {
         }
     }  
 })
+
 export { activateReservation }

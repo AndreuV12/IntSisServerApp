@@ -16,4 +16,4 @@ client.on('message', function (topic, message) {
 
 // client.publish('rfid', `${terminal_id}/b27433ec`)
 
-client.publish(`${terminal_id}/code`, `11111`)
+// client.publish(`${terminal_id}/code`, `11111`)
