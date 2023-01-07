@@ -15,18 +15,10 @@ import { addCredentials} from './utils/middlewares.js'
 import { PORT, ON_PRODUCTION, CLIENT_URL} from './config/config.js'
 
 let app = express()
-var whitelist = ['http://localhost:3000/', 'https://techlab-client.herokuapp.com/']
 
 app.use(cors({
-    // origin: CLIENT_URL,
     credentials: true,
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    }
+    origin: CLIENT_URL
 }))
 
 app.use(cookieParser())
