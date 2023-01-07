@@ -1,4 +1,5 @@
 import Reservation from "../models/reservation.js"
+import { genCode } from "../utils/codeGenerator.js"
 let checkReservation = async (terminal_id, email) => {
     let now = new Date()
     return (await Reservation.findOne({terminal_id, email, start: {$lte: now}, end: {$gte: now}}))
@@ -8,12 +9,13 @@ let addReservation = function (email, terminal_id, start, end){
     start = new Date(start)
     end = new Date(end)
     if (isNaN(start.getTime()) || isNaN(end.getTime())) return false
-
+    let code = genCode(5)
     let reservation = new Reservation({
         email,
         terminal_id,
         start,
-        end
+        end,
+        code
     })
     return reservation.save()
 }

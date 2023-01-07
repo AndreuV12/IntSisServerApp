@@ -5,13 +5,14 @@ import cookieParser from 'cookie-parser'
 import "./config/mongo.js"
 import "./utils/mqtt/mqttHandler.js"
 
+import user_router from './routes/user.js'
 import google_router from './routes/google_auth.js'
 import terminal_router from './routes/terminal.js'
 import machine_router from './routes/machine.js'
 import reservation_router from './routes/reservation.js'
 
-import { checkAuth, addCredentials} from './utils/middlewares.js'
-import { PORT, ON_PRODUCTION, COOKIE_DOMAIN, CLIENT_URL} from './config/config.js'
+import { addCredentials} from './utils/middlewares.js'
+import { PORT, ON_PRODUCTION, CLIENT_URL} from './config/config.js'
 
 let app = express()
 app.use(cors({
@@ -39,23 +40,6 @@ app.use('/oauth/google/', google_router)
 app.use('/terminals/', terminal_router)
 app.use('/machines/', machine_router)
 app.use('/reservations/', reservation_router)
-
-
-app.get('/', checkAuth, (req,res) => {
-    res.send(`Hi ${req.session.user}, ${COOKIE_DOMAIN}!`)
-})
-
-app.get('/login', checkAuth, (req, res) => {
-    res.json(req.session.user)
-})
-
-app.get('/logout', checkAuth, (req, res) => {
-    req.session.user = {}
-    res.send("loged out")
-})
-
-app.get('/username', checkAuth, (req, res) => {
-    res.json(req.session.user.username)
-})
+app.use('/user/', user_router)
 
 app.listen( PORT,() => console.log(`Server App listening on ${PORT}`))

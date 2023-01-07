@@ -7,10 +7,13 @@ client.on('connect', function () {
 })
 
 client.subscribe('reserva')
+client.subscribe(`${terminal_id}/code`)
 
 client.on('message', function (topic, message) {
     // message is Buffer
     console.log(topic, "->", message.toString())
 })
 
-client.publish('rfid', `${terminal_id}/b27433ec`)
+// client.publish('rfid', `${terminal_id}/b27433ec`)
+
+client.publish(`${terminal_id}/code`, `11111`)
