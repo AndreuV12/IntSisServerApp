@@ -3,7 +3,7 @@ import cors from 'cors'
 import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import "./config/mongo.js"
-//import "./utils/mqtt/mqttHandler.js"
+import "./utils/mqtt/mqttHandler.js"
 
 import user_router from './routes/user.js'
 import google_router from './routes/google_auth.js'
