@@ -3,7 +3,7 @@ import cors from 'cors'
 import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import "./config/mongo.js"
-import "./utils/mqtt/mqttHandler.js"
+//import "./utils/mqtt/mqttHandler.js"
 
 import user_router from './routes/user.js'
 import google_router from './routes/google_auth.js'
@@ -11,8 +11,8 @@ import terminal_router from './routes/terminal.js'
 import machine_router from './routes/machine.js'
 import reservation_router from './routes/reservation.js'
 
-import { addCredentials} from './utils/middlewares.js'
-import { PORT, ON_PRODUCTION, CLIENT_URL} from './config/config.js'
+import { addCredentials } from './utils/middlewares.js'
+import { PORT, ON_PRODUCTION, CLIENT_URL } from './config/config.js'
 
 let app = express()
 
@@ -23,7 +23,7 @@ app.use(cors({
 
 app.use(cookieParser())
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.set('trust proxy', 1)
 app.use(session({
     secret: "pwd",
@@ -31,7 +31,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 60*60*1000,
+        maxAge: 60 * 60 * 1000 * 24,
         secure: Boolean(ON_PRODUCTION),
         sameSite: Boolean(ON_PRODUCTION) ? "none" : false
     }
@@ -44,4 +44,4 @@ app.use('/machines/', machine_router)
 app.use('/reservations/', reservation_router)
 app.use('/user/', user_router)
 
-app.listen( PORT,() => console.log(`Server App listening on ${PORT}`))
+app.listen(PORT, () => console.log(`Server App listening on ${PORT}`))

@@ -1,8 +1,8 @@
-import {Router} from "express"
+import { Router } from "express"
 import { checkAuth } from "../utils/middlewares.js"
 let user_router = Router()
 
-user_router.get ('/', checkAuth, async (req,res) => {
+user_router.get('/', checkAuth, async (req, res) => {
     res.json(req.session.user)
 })
 
