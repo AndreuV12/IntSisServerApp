@@ -6,7 +6,7 @@ let checkAuth = (req, res, next) => {
 }
 
 let addCredentials = (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', CLIENT_URL )
+    res.header('Access-Control-Allow-Origin', CLIENT_URL)
     res.header('Access-Control-Allow-Credentials', true)
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     next()
@@ -21,4 +21,4 @@ let addSession = (req, _res, next) => {
     next()
 }
 
-export {checkAuth, addCredentials, addSession}
+export { checkAuth, addCredentials, addSession }
