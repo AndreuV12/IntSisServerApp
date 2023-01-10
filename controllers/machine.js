@@ -5,11 +5,11 @@ let addMachine = (name, description) => {
         name,
         description
     })
-    return machine.save()
+    return machine.save().catch((err) => { null })
 }
 
 let getMachine = (name) => {
-    return Machine.findOne({name})
+    return Machine.findOne({ name })
 }
 
 let getAllMachines = () => {
@@ -17,6 +17,6 @@ let getAllMachines = () => {
 }
 
 let deleteMachine = (name) => {
-    return Machine.findOneAndDelete({name})
+    return Machine.findOneAndDelete({ name })
 }
-export {addMachine, getMachine, getAllMachines, deleteMachine}
+export { addMachine, getMachine, getAllMachines, deleteMachine }

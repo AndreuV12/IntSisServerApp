@@ -1,25 +1,51 @@
-import {Router} from "express"
-import { getTerminal, getAllTerminals, addTerminal, deleteTerminal, bindTerminal } from "../controllers/terminal.js"
+import { Router } from "express"
+import { getTerminal, getAllTerminals, addTerminal, deleteTerminal, bindTerminal, setPermission } from "../controllers/terminal.js"
+import { checkAdmin } from "../utils/middlewares.js"
+import { getMachine } from "../controllers/machine.js"
 let terminal_router = Router()
 
-terminal_router.get ('/', async (req,res) => {
+terminal_router.get('/', async (req, res) => {
     let terminals = await getAllTerminals()
     res.json(terminals)
 })
 
-terminal_router.post ('/add', async (req,res) => { 
-    let {machine_name, permission} = req.body
-    return res.json( await addTerminal(machine_name, permission) )
+terminal_router.post('/add', checkAdmin, async (req, res) => {
+    let { machine_name, permission } = req.body
+    let terminal = await addTerminal(machine_name, permission)
+    if (terminal)
+        return res.json(terminal)
+    else
+        return res.status(404).send("Bad entry")
 })
 
-terminal_router.post ('/delete', async (req,res) => { 
-    let {terminal_id} = req.body
-    return res.json ( await deleteTerminal(terminal_id) )
+terminal_router.post('/delete', checkAdmin, async (req, res) => {
+    let { terminal_id } = req.body
+    let terminal = await deleteTerminal(terminal_id)
+    if (terminal)
+        return res.json(terminal)
+    else
+        return res.status(404).send("Non existing terminal_id")
 })
 
-terminal_router.post ('/bind', async (req,res) => { //query: terminal_id machine_name
-    let {terminal_id, machine_name} = req.body
-    res.json( await bindTerminal(terminal_id, machine_name))
+terminal_router.post('/bind', checkAdmin, async (req, res) => { //query: terminal_id machine_name
+    let { terminal_id, machine_name } = req.body
+    let machine = await getMachine(machine_name)
+    if (!machine) res.status(404).send("Non existing machine with this name")
+
+    let terminal = await bindTerminal(terminal_id, machine_name)
+    if (terminal)
+        return res.json(terminal)
+    else
+        return res.status(404).send("Non existing terminal_id")
+})
+
+terminal_router.post('/set-permission', checkAdmin, async (req, res) => { //query: terminal_id machine_name
+    let { terminal_id, permission } = req.body
+    let terminal = await setPermission(terminal_id, permission)
+    if (terminal)
+        return res.json(terminal)
+    else
+        return res.status(404).send("Non existing terminal_id")
 })
 
 terminal_router.get('/find/:terminal_id', async (req, res) => {

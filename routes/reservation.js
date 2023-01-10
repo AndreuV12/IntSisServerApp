@@ -8,7 +8,6 @@ import { activateReservation, setCode } from '../utils/mqtt/mqttHandler.js'
 const reservation_router = Router()
 
 //routes
-
 reservation_router.get('/', async (req, res) => {
     let { from, to, terminal_id } = req.query
     return res.json(await getReservations(from, to, terminal_id, null))

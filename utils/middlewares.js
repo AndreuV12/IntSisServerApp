@@ -5,6 +5,11 @@ let checkAuth = (req, res, next) => {
     next()
 }
 
+let checkAdmin = (req, res, next) => {
+    if (!req.session.user || req.session.user.permission < 10) return res.status(401).send("Not admin auth")
+    next()
+}
+
 let addCredentials = (req, res, next) => {
     res.header('Access-Control-Allow-Origin', CLIENT_URL)
     res.header('Access-Control-Allow-Credentials', true)
@@ -21,4 +26,4 @@ let addSession = (req, _res, next) => {
     next()
 }
 
-export { checkAuth, addCredentials, addSession }
+export { checkAuth, addCredentials, addSession, checkAdmin }
