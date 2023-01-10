@@ -5,6 +5,9 @@ let checkAuth = (req, res, next) => {
     next()
 }
 
+
+
+
 let checkAdmin = (req, res, next) => {
     if (!req.session.user || req.session.user.permission < 10) return res.status(401).send("Not admin auth")
     next()
