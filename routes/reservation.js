@@ -40,13 +40,14 @@ reservation_router.get('/code/set', async (req, res) => {
 reservation_router.get('/code/check', checkAuth, async (req, res) => {
     let reservation = await getReservationByCode(req.query.code, req.session.user.email)
     if (reservation) {
-        activateReservation(reservation.terminal_id, reservation.end)
-        return res.send("reservation activated")
+        let result = await activateReservation(reservation.terminal_id, reservation.end)
+        if (!result)
+            return res.status(412).send("Permís de la Api externa denegat")
+        else
+            return res.send("Reserva Activada")
     }
-    return res.send("no ongoing reservation matched with code")
-
+    return res.status(404).send("El codi no coincideix amb la reserva")
 })
-
 
 reservation_router.post('/add', checkAuth, async function (req, res) {
     let { terminal_id, start, end } = req.body

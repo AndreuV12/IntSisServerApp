@@ -1,18 +1,21 @@
 import mqtt from 'mqtt'
 import { getUserByRfid } from '../../controllers/user.js'
 import { checkReservation } from '../../controllers/reservation.js'
+import { externalApiCall } from "../externalApi.js"
 
 const client = mqtt.connect("mqtt://test.mosquitto.org", { port: 1884, username: "rw", password: "readwrite" })
 client.on('connect', function () { console.log("Mqtt is Connected") })
 
+let activateReservation = async (terminal_id, end) => {
+    if (!(await externalApiCall())) return false
 
-let activateReservation = (terminal_id, end) => {
     client.publish(`${terminal_id}/reserva`, end.getTime().toString().slice(0, -3))
     let now = new Date()
     setTimeout(() => {
         client.publish(`${terminal_id}/reserva`, '-1')
     },
         end - now)
+    return true
 }
 
 let setCode = (terminal_id, code) => {
